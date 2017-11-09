@@ -1,6 +1,5 @@
 #include <iostream>
 #include "tools.h"
-#include "Dense"
 #include <vector>
 
 using Eigen::VectorXd;
