@@ -56,14 +56,6 @@ FusionEKF::FusionEKF() {
 				0, 0, 1, 0,
 				0, 0, 0, 1;
 	  
-	  //set the acceleration noise components
-	  noise_ax = 5;
-	  noise_ay = 5;
-
-  
-
-
-
 }
 
 /**
@@ -122,6 +114,11 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
      * Update the process noise covariance matrix.
      * Use noise_ax = 9 and noise_ay = 9 for your Q matrix.
    */
+	  //set the acceleration noise components
+  float noise_ax = 9.0;
+  float noise_ay = 9.0;
+
+  
   float dt1 = (measurement_pack.timestamp_ - previous_timestamp_) / 100000;
   previous_timestamp_ = measurement_pack.timestamp_;
 
@@ -151,7 +148,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 
   if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
     // Radar updates
-    Hj_ = Tools.CalculateJacobian(ekf_.x_);
+    Hj_ = tools.CalculateJacobian(ekf_.x_);
 
 	ekf_.R_ = R_radar_;
 	ekf_.H_ = Hj_;
