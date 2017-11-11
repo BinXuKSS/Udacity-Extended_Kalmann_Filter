@@ -39,24 +39,14 @@ FusionEKF::FusionEKF() {
     * Set the process and measurement noises
   */
 	  
-	  //state covariance matrix P
-	  ekf_.P_ = MatrixXd(4, 4);
-	  ekf_.P_ << 1, 0, 0, 0,
-				0, 1, 0, 0,
-				0, 0, 1000, 0,
-				0, 0, 0, 1000;
+
 	  
 	  //measurement matrix
 	  H_laser_ << 1, 0, 0, 0,
 				0, 1, 0, 0;
 
 	  
-	  //the initial transition matrix F_
-	  ekf_.F_ = MatrixXd(4, 4);
-	  ekf_.F_ << 1, 0, 1, 0,
-				0, 1, 0, 1,
-				0, 0, 1, 0,
-				0, 0, 0, 1;
+
 	  
 }
 
@@ -106,6 +96,13 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 		ekf_.x_(1) = SmallValue;
 	}
 
+		  //state covariance matrix P
+	ekf_.P_ = MatrixXd(4, 4);
+	ekf_.P_ << 1, 0, 0, 0,
+				0, 1, 0, 0,
+				0, 0, 1000, 0,
+				0, 0, 0, 1000;
+
 	previous_timestamp_ = measurement_pack.timestamp_;
 
     // done initializing, no need to predict or update
@@ -132,12 +129,18 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
   float dt1 = (measurement_pack.timestamp_ - previous_timestamp_) / 100000;
   previous_timestamp_ = measurement_pack.timestamp_;
 
+
+  //the initial transition matrix F_
+  ekf_.F_ = MatrixXd(4, 4);
+  ekf_.F_ << 1, 0, dt1, 0,
+			0, 1, 0, dt1,
+			0, 0, 1, 0,
+			0, 0, 0, 1;
+	  
   float dt2 = dt1 * dt1;
   float dt3 = dt2 * dt1;
   float dt4 = dt3 * dt1;
 
-  ekf_.F_(0,2) = dt1;
-  ekf_.F_(1,3) = dt1;
 
   ekf_.Q_ << dt4*noise_ax/4, 0, dt3*noise_ax/2,0,
   			 0,dt4*noise_ay/4, 0, dt3*noise_ay/2,
