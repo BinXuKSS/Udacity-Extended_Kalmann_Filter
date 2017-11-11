@@ -107,6 +107,8 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 
     // done initializing, no need to predict or update
     is_initialized_ = true;
+
+	cout << "initialized" <<endl;
     return;
   }
 
@@ -147,7 +149,11 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
   			 dt3*noise_ax/2,0,dt2*noise_ax,0,
   			 0,dt3*noise_ax/2,0,dt2*noise_ax;
 
+  cout << "before_predict" << endl;
+
   ekf_.Predict();
+
+  cout << "before_update" << endl;
 
   /*****************************************************************************
    *  Update
@@ -176,6 +182,8 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 
     ekf_.Update(measurement_pack.raw_measurements_);
   }
+
+  cout << "update" << endl;
 
   // print the output
   cout << "x_ = " << ekf_.x_ << endl;
