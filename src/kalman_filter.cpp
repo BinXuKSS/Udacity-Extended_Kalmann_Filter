@@ -1,5 +1,6 @@
 #include "kalman_filter.h"
 #include "math.h"
+#define pi 3.1415926
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
@@ -59,7 +60,23 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   float vx = x_(2);
   float vy = x_(3);
   float ro = sqrt(px*px + py*py);
-  float theta = atan(py,px);
+  float theta = atan2(py,px);
+  cout << "theta original" << theta << endl;
+  if(theta > pi)
+  {
+    theta -=2*pi;
+  }
+  else if(theta < (-1 * pi))
+  {
+    theta +=2*pi;
+  }
+  else
+  {
+    /* doing nothing */
+  }
+
+  cout << "theta modified" << theta << endl;
+  
   float ro_dot = (px*vx + py*vy)/ro;
   VectorXd z_pred = VectorXd(3);
   z_pred << ro, theta, ro_dot;
