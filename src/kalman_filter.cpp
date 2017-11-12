@@ -4,6 +4,7 @@
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
+using namespace std;
 
 // Please note that the Eigen library does not initialize 
 // VectorXd or MatrixXd objects with zeros upon creation.
@@ -61,7 +62,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   float vy = x_(3);
   float ro = sqrt(px*px + py*py);
   float theta = atan2(py,px);
-  cout << "theta original" << theta << endl;
+  cout << "theta original" << theta <<endl;
   if(theta > pi)
   {
     theta -=2*pi;
@@ -75,7 +76,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     /* doing nothing */
   }
 
-  cout << "theta modified" << theta << endl;
+  cout << "theta modified" << theta <<endl;
   
   float ro_dot = (px*vx + py*vy)/ro;
   VectorXd z_pred = VectorXd(3);
