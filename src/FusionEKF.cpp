@@ -108,7 +108,6 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     // done initializing, no need to predict or update
     is_initialized_ = true;
 
-	cout << "initialized" <<endl;
     return;
   }
 
@@ -127,13 +126,10 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
   float noise_ax = 9.0;
   float noise_ay = 9.0;
 
-  cout << "1" << endl;
   float dt1 = (measurement_pack.timestamp_ - previous_timestamp_) / 100000;
 
-  cout << "2" << endl;
   previous_timestamp_ = measurement_pack.timestamp_;
 
-  cout << "3" << endl;
   //the initial transition matrix F_
   ekf_.F_ = MatrixXd(4, 4);
   ekf_.F_ << 1, 0, dt1, 0,
@@ -145,7 +141,6 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
   float dt3 = dt2 * dt1;
   float dt4 = dt3 * dt1;
 
-  cout << "4" << endl;
 
   ekf_.Q_ = MatrixXd(4, 4);
   ekf_.Q_ << dt4*noise_ax/4, 0, dt3*noise_ax/2,0,
@@ -153,11 +148,9 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
   			 dt3*noise_ax/2,0,dt2*noise_ax,0,
   			 0,dt3*noise_ax/2,0,dt2*noise_ax;
 
-  cout << "before_predict" << endl;
 
   ekf_.Predict();
 
-  cout << "before_update" << endl;
 
   /*****************************************************************************
    *  Update
@@ -177,6 +170,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 	ekf_.H_ = Hj_;
 	
     ekf_.UpdateEKF(measurement_pack.raw_measurements_);
+	cout << "radar" << measurement_pack.raw_measurements_ << endl;
     
   } else {
     // Laser updates
@@ -185,9 +179,9 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 	ekf_.H_ = H_laser_;
 
     ekf_.Update(measurement_pack.raw_measurements_);
+	cout << "lidar" << measurement_pack.raw_measurements_ << endl;
   }
 
-  cout << "update" << endl;
 
   // print the output
   cout << "x_ = " << ekf_.x_ << endl;
