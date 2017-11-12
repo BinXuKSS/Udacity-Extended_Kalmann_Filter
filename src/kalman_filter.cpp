@@ -1,5 +1,7 @@
 #include "kalman_filter.h"
 #include "math.h"
+#include <iostream>
+
 #define pi 3.1415926
 
 using Eigen::MatrixXd;
