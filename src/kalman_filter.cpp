@@ -3,7 +3,7 @@
 #include <iostream>
 
 #define pi 3.1415926
-#define SmallValue 0.0001
+#define SmallValue 0.00001
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
@@ -67,7 +67,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   float vx = x_(2);
   float vy = x_(3);
   float ro = sqrt(px*px + py*py);
-  if(fabs(px) < SmallValue and fabs(py) < SmallValue)
+  if(fabs(px) < SmallValue or fabs(py) < SmallValue)
   {
   	  theta = 0.0;
 	  ro_dot = 0.0;
