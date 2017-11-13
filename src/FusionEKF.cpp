@@ -101,10 +101,10 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 	cout << "initial value" << ekf_.x_ <<endl;
 		  //state covariance matrix P
 	ekf_.P_ = MatrixXd(4, 4);
-	ekf_.P_ << 0.01, 0, 0, 0,
-				0, 0.01, 0, 0,
-				0, 0, 0.01, 0,
-				0, 0, 0, 0.01;
+	ekf_.P_ << 1, 0, 0, 0,
+				0, 1, 0, 0,
+				0, 0, 1000, 0,
+				0, 0, 0, 1000;
 
 	previous_timestamp_ = measurement_pack.timestamp_;
 
@@ -126,8 +126,8 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
      * Use noise_ax = 9 and noise_ay = 9 for your Q matrix.
    */
 	  //set the acceleration noise components
-  float noise_ax = 9.0;
-  float noise_ay = 9.0;
+  float noise_ax = 5.0;
+  float noise_ay = 5.0;
 
   float dt1 = (measurement_pack.timestamp_ - previous_timestamp_) / 1000000.0;
 
