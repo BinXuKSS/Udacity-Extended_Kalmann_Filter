@@ -101,10 +101,10 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 	cout << "initial value" << ekf_.x_ <<endl;
 		  //state covariance matrix P
 	ekf_.P_ = MatrixXd(4, 4);
-	ekf_.P_ << 1, 0, 0, 0,
-				0, 1, 0, 0,
-				0, 0, 1000, 0,
-				0, 0, 0, 1000;
+	ekf_.P_ << 0.1, 0, 0, 0,
+				0, 0.1, 0, 0,
+				0, 0, 10, 0,
+				0, 0, 0, 10;
 
 	previous_timestamp_ = measurement_pack.timestamp_;
 
