@@ -67,6 +67,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   float vx = x_(2);
   float vy = x_(3);
   float ro = sqrt(px*px + py*py);
+/*
   if(fabs(px) < SmallValue or fabs(py) < SmallValue)
   {
   	  theta = 0.0;
@@ -75,6 +76,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   }
   else
   {
+  */
 	  theta = atan2(py,px);
 	  cout << "theta original" << theta << endl;
 	  if(theta > pi)
@@ -93,7 +95,6 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
 	  
 	  ro_dot = (px*vx + py*vy)/ro;
 
-  }
 
 
   
