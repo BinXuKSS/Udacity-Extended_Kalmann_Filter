@@ -93,6 +93,18 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
 	  
 	  ro_dot = (px*vx + py*vy)/ro;
 
+  	  if(z(1) > pi)
+	  {
+		z(1) -=2*pi;
+	  }
+	  else if(z(1) < (-1 * pi))
+	  {
+		z(1) +=2*pi;
+	  }
+	  else
+	  {
+		/* doing nothing */
+	  }
 
 
   
