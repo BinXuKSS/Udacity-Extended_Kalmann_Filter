@@ -3,7 +3,7 @@
 #include <iostream>
 
 #define pi 3.1415926
-#define SmallValue 0.2
+#define SmallValue 0.1
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
