@@ -78,7 +78,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   {
   */
 	  theta = atan2(py,px);
-=	  if(theta > pi)
+	  if(theta > pi)
 	  {
 		theta -=2*pi;
 	  }
