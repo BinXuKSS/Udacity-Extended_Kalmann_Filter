@@ -77,41 +77,27 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   else
   {
   */
-	  theta = atan2(py,px);
-	  if(theta > pi)
-	  {
-		theta -=2*pi;
-	  }
-	  else if(theta < (-1 * pi))
-	  {
-		theta +=2*pi;
-	  }
-	  else
-	  {
-		/* doing nothing */
-	  }
-	  
+	  theta = atan2(py,px);	  
 	  ro_dot = (px*vx + py*vy)/ro;
-
-  	  if(z(1) > pi)
-	  {
-		z(1) -=2*pi;
-	  }
-	  else if(z(1) < (-1 * pi))
-	  {
-		z(1) +=2*pi;
-	  }
-	  else
-	  {
-		/* doing nothing */
-	  }
-
 
   
   VectorXd z_pred = VectorXd(3);
   z_pred << ro, theta, ro_dot;
   cout << "z_pred" << z_pred << endl;
   VectorXd y = z - z_pred;	
+
+  if(y(1) > pi)
+  {
+	y(1) -=2*pi;
+  }
+  else if(y(1) < (-1 * pi))
+  {
+    y(1) +=2*pi;
+  }
+  else
+  {
+		/* doing nothing */
+  }
   MatrixXd Ht = H_.transpose();	
   MatrixXd S = H_ * P_ * Ht + R_;	
   MatrixXd Si = S.inverse();	
