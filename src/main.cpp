@@ -76,6 +76,8 @@ int main()
           		meas_package.raw_measurements_ << px, py;
           		iss >> timestamp;
           		meas_package.timestamp_ = timestamp;
+				cout << "L" << meas_package.raw_measurements_<< endl;
+				cout << "time" << meas_package.timestamp_ << endl;
           } else if (sensor_type.compare("R") == 0) {
 
       	  		meas_package.sensor_type_ = MeasurementPackage::RADAR;
@@ -89,6 +91,8 @@ int main()
           		meas_package.raw_measurements_ << ro,theta, ro_dot;
           		iss >> timestamp;
           		meas_package.timestamp_ = timestamp;
+				cout << "R" << meas_package.raw_measurements_ << endl;
+				cout << "time" << meas_package.timestamp_ << endl;
           }
           float x_gt;
     	  float y_gt;
@@ -104,6 +108,8 @@ int main()
     	  gt_values(2) = vx_gt;
     	  gt_values(3) = vy_gt;
     	  ground_truth.push_back(gt_values);
+
+		  cout << "GT" << ground_truth << endl;
           
           //Call ProcessMeasurment(meas_package) for Kalman filter
     	  fusionEKF.ProcessMeasurement(meas_package);    	  
